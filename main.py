@@ -1,6 +1,6 @@
 import random
 import os
-from Assets.Players.Player import create_dir, player_choice, delete
+from core.Player import create_dir, player_choice, delete
 
 
 def main_menu():
@@ -13,7 +13,7 @@ def play():
 
 
 def create_player():
-    os.chdir("Assets/Players")
+    os.chdir("storage/Players")
     name = input("\tChoose your alias : ")
     create_dir(name)
 

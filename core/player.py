@@ -1,7 +1,9 @@
 import os
 import json
 
-ASSETS_LOCATION = "Assets/Players"
+ASSETS_LOCATION = "storage/Players"
+
+# TODO ADD COMMENTS ON PY SCRIPTS
 
 
 def create_dir(dir_name):
@@ -18,24 +20,34 @@ def create_dir(dir_name):
 
         os.makedirs(dir_name)
         os.chdir(dir_name)
-        alias = open("player.json","w+")
+        alias = open("player.json", "w+")
         data = {"name": dir_name, "age": age, "champions": []}
         alias.seek(0)
         alias.write(json.dumps(data))
         code = 0
     else:
         code = 1
-    reset("../..")
+    reset("../../..")
+    print(os.getcwd())
     print(messages[code])
 
 
 def player_choice():
     print("\n\n\tPlayers:  ")
-    i=1
     players = os.listdir(ASSETS_LOCATION)
     for j, player in enumerate(players):
         print("\t" + str(j + 1) + ") " + player)
 
+    while True:
+        try:
+            choice = int(input("Choose player : ")) - 1
+            if choice not in range(0, len(players)):
+                print("Wrong number chosen.")
+                continue
+            break
+        except ValueError:
+            print("Error while choosing player.")
+# TODO Take a good look here. It is intended that the scripts choose a player in the end so we can proceed to the menu
 
 def delete():
     players = os.listdir(ASSETS_LOCATION)
@@ -51,7 +63,7 @@ def delete():
 
     import shutil
     deleted = players[deleted]
-    os.chdir("Assets/Players")
+    os.chdir("storage/Players")
     shutil.rmtree(deleted)
 
     print("Player was removed from list")

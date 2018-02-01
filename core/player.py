@@ -5,6 +5,7 @@ ASSETS_LOCATION = "storage/Players"
 
 # TODO ADD COMMENTS ON PY SCRIPTS
 
+print("testing")
 
 def create_dir(dir_name):
     messages = ["\tPlayer successfully created", "\tThe player with this name already exists"]

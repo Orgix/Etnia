@@ -3,6 +3,7 @@ import core.player as player
 
 Codes = ["NOT_READY", "READY"]
 STATUS_CODE = Codes[0]
+print("still testing")
 
 
 def main_menu():

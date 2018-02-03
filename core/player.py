@@ -3,14 +3,11 @@ import json
 
 ASSETS_LOCATION = "storage/Players"
 
-# TODO ADD COMMENTS ON PY SCRIPTS
-
-print("testing")
 
 def create_dir(dir_name):
     messages = ["\tPlayer successfully created", "\tThe player with this name already exists"]
     if not os.path.isdir(dir_name):
-        print("\tThe username is avaiable for use!")
+        print("\tThe username is available for use!")
 
         while True:
             try:
@@ -29,35 +26,42 @@ def create_dir(dir_name):
     else:
         code = 1
     reset("../../..")
-    print(os.getcwd())
     print(messages[code])
 
 
 def player_choice():
     print("\n\n\tPlayers:  ")
     players = os.listdir(ASSETS_LOCATION)
-    for j, player in enumerate(players):
-        print("\t" + str(j + 1) + ") " + player)
-
+    for j, player in enumerate(players, 1):
+        print("\t" + str(j) + ") " + player)
+    print("\t" + str(len(players) + 1) + ") Go back ")
     while True:
         try:
-            choice = int(input("Choose player : ")) - 1
-            if choice not in range(0, len(players)):
+            choice = int(input("\tChoose player : ")) - 1
+            if choice not in range(0, len(players) + 1):
                 print("Wrong number chosen.")
                 continue
             break
         except ValueError:
             print("Error while choosing player.")
-# TODO Take a good look here. It is intended that the scripts choose a player in the end so we can proceed to the menu
+    if choice == len(players):
+        return 0
+    else:
+        print("Welcome " + players[choice])
+        return players[choice]
+
 
 def delete():
     players = os.listdir(ASSETS_LOCATION)
-    for j, player in enumerate(players):
-        print("\t" + str(j + 1) + ") " + player)
+    for j, player in enumerate(players, 1):
+        print("\t" + str(j) + ") " + player)
 
     while True:
         try:
-            deleted = int(input(" Choose player to delete: ")) - 1
+            deleted = int(input("\tChoose player to delete: ")) - 1
+            if deleted not in range(0, len(players)):
+                print("Out of bounds choice. Please choose again")
+                continue
             break
         except ValueError:
             print("That's not a valid option.")
@@ -73,3 +77,19 @@ def delete():
 
 def reset(path):
     os.chdir(path)
+
+
+def play_game():
+    file = open("player.json", "r+")
+    data = json.loads(file.read())
+    game_menu()
+    while True:
+        print("kappa")
+        game_menu()
+        break
+
+
+def game_menu():
+    print("\t1) Create champion\n\t2) Delete Champion\n\t"
+          "3) Statistics\n\t4) View inventory\n\t5) Switch equipment\n\t"
+          "6) Free Roam Battle\n\t7) Dungeon exploration\n\t8) Switch player")

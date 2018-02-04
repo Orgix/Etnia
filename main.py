@@ -1,57 +1,91 @@
+import shutil
 import os
 import core.player as player
 
+
 Codes = ["NOT_READY", "READY"]
 STATUS_CODE = Codes[0]
-print("still testing")
+CURR_PLAYER = None
 
 
 def main_menu():
+
     print("      --------------------------------Menu--------------------------------")
-    # TODO Change function structure. In case a player has been chosen , the  "Choose player" appears. If not, " Choose player" appears"
-    print("\t1) Play\n\t2) Choose Player\n\t3) Create Player\n\t4) Delete Player\n\t5) Quit")
+    print("\t1) Play")
+
+    if CURR_PLAYER is None:
+        print("\n\t2) Choose Player")
+    else:
+        print("\n\t2) Switch Player")
+
+    print("\n\t3) Create Player")
+    print("\n\t4) Delete Player")
+    print("\n\t5) Quit")
 
 
 def play():
-    global STATUS_CODE
-    if STATUS_CODE == Codes[1]:
-        player.play_game()
+    if CURR_PLAYER is not None:
+        player.play_game(CURR_PLAYER)
     else:
-        print("You need to have chosen a player")
+        print("\tYou need to have chosen a player")
 
 
 def create_player():
-    os.chdir("storage/Players")
     name = input("\tChoose your alias : ")
     player.create_dir(name)
+    print(os.getcwd())
 
 
 def choose_player():
+    global CURR_PLAYER
     curr = player.player_choice()
     if type(curr) == str:
-        os.chdir("storage/Players/" + curr)
-        return 1
+        CURR_PLAYER = curr
+    print(os.getcwd())
+
+
+def switch_player():
+    global CURR_PLAYER
+    curr = player.change_player()
+    if type(curr) == str:
+        if curr == CURR_PLAYER:
+            print("That's the current player")
+            print(os.getcwd())
+        else:
+            print("\n\tWelcome " + curr)
+            CURR_PLAYER = curr
+    print(os.getcwd())
 
 
 def delete_player():
-    player.delete()
+    global CURR_PLAYER
+    if player.get_player_count() != 0:
+        deleted = player.delete()
+        if type(deleted) == str:
+            os.chdir("storage/Players")
+            if deleted == CURR_PLAYER:
+                CURR_PLAYER = None
+            shutil.rmtree(deleted)
+            os.chdir("../..")
+    else:
+        print("No players to delete")
+        print(os.getcwd())
+    print(os.getcwd())
 
 
 def main():
     print("--------------------------------Welcome to Etnia-------------------------------\n\n")
     main_menu()
-    global STATUS_CODE
+    print(CURR_PLAYER)
     while True:
         choice = input("\n\tMAIN MENU : ")
         if choice == '1':
             play()
         elif choice == '2':
-            if STATUS_CODE == Codes[0]:
-                result = choose_player()
-                if result == 1:
-                    STATUS_CODE = Codes[1]
+            if CURR_PLAYER is None:
+                choose_player()
             else:
-                print("\n\tA player has already been chosen")
+                switch_player()
         elif choice == '3':
             create_player()
         elif choice == '4':

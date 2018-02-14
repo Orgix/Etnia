@@ -76,7 +76,6 @@ def delete_player():
 def main():
     print("--------------------------------Welcome to Etnia-------------------------------\n\n")
     main_menu()
-    print(CURR_PLAYER)
     while True:
         choice = input("\n\tMAIN MENU : ")
         if choice == '1':

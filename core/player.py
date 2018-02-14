@@ -1,5 +1,6 @@
 import os
 import json
+import core.champion as champ
 
 ASSETS_LOCATION = "storage/Players"
 
@@ -87,10 +88,12 @@ def play_game(name):
     os.chdir(ASSETS_LOCATION + "/" + name)
     file = open("player.json", "r+")
     data = json.loads(file.read())
-
+    if data["name"] != name:
+        import sys
+        sys.exit("There's a slight mix-up. Perhaps you have move the player's file to another directory")
     while True:
+        print("\n\tPLAYER : " + name)
         game_menu()
-        print("\n\tPLAYER : " + name + "\n\tAGE : " + str(data["age"]) + "\n")
         choice = input("\n\tGAME MENU : ")
         if choice == "1":
             print("champpp")
@@ -110,7 +113,7 @@ def play_game(name):
             print("go back")
         else:
             print("Wrong choice")
-
+# todo : Gradually write the functions on the champion.py
 
 def change_player():
     print(os.getcwd())
@@ -134,11 +137,15 @@ def change_player():
 
 
 def get_player_count():
-    print(os.getcwd(), " ", len(os.listdir(ASSETS_LOCATION)))
     return len(os.listdir(ASSETS_LOCATION))
 
 
 def game_menu():
-    print("\t1) Create champion\n\t2) Delete Champion\n\t"
-          "3) Statistics\n\t4) View inventory\n\t5) Switch equipment\n\t"
-          "6) Free Roam Battle\n\t7) Dungeon exploration\n\t8) Back to main Menu")
+    print("\t1) Create champion")
+    print("\n\t2) Delete Champion")
+    print("\n\t3) Statistics")
+    print("\n\t4) View inventory")
+    print("\n\t5) Switch equipment")
+    print("\n\t6) Free Roam Battle")
+    print("\n\t7) Dungeon exploration")
+    print("\n\t8) Back to main Menu")

@@ -67,3 +67,9 @@ GAME:
 	The idea of making the game more visual will be implemented only once the game has been developed in a basic scale. Until this stage has been reached , the dungeons will still exist, but the way of battle will be more simplistic. For instance,
 	once the player has entered the dungeon with the chosen champions , monsters will immediately approach and engage in battle. As a gamer myself , I wouldn't like to keep the game this way, as I know that this will actually get boring eventually.
 	
+-----------------------------------------------------04/02/2018-------------------------------------------------------------------
+The Main Menu is completed and finally I'm proceeding to the Game menu. From now on , deleting,choosing,switching players is possible.
+Also , I'm proceeding with the GAME MENU, that is located on player.py. After I create the functions in the file, I'm probably going to make the champion.py and options.py(that will have all menu functions).
+
+Within this file , there'll probably be the champion class , that will be holding all functions that a hero can have.
+	
